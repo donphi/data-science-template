@@ -1,0 +1,52 @@
+
+# Ignore data folder (contains large and/or sensitive files)
+/data/
+
+# Ignore environment files
+.env
+.env.*
+
+# Ignore system files and temporary files
+*.DS_Store
+Thumbs.db
+
+# Ignore Python-related files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pkl
+
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Ignore virtual environment folders
+venv/
+env/
+.venv/
+
+# Ignore build artifacts and cache directories
+build/
+dist/
+*.egg-info/
+.eggs/
+*.egg
+
+# Ignore logs
+logs/
+*.log
+
+# Ignore compiled or generated files
+*.so
+*.dll
+*.out
+
+# Ignore Docker-specific files
+docker/*.env
+
+# Ignore IDE and editor settings
+.vscode/
+.idea/
+
+# Ignore any additional secrets or sensitive files
+secrets/

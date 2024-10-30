@@ -1,0 +1,15 @@
+
+# Basic data manipulation and machine learning libraries
+matplotlib
+polars
+pandas
+scikit-learn
+numpy
+seaborn
+scipy
+
+# Additional useful libraries
+jupyter
+notebook
+ipykernel
+plotly
