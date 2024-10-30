@@ -1,7 +1,20 @@
+
 # Data Project Template
 
 ## Overview
 This project template is based on a simplified version of the [Cookiecutter Data Science](https://cookiecutter-data-science.drivendata.org) template. It is designed to support AI and data science projects using Docker and Visual Studio Code’s dev container setup for a reproducible environment.
+
+## Prerequisites for Multi-Platform Use
+To use this template across different operating systems (Linux, macOS, and Windows), ensure the following prerequisites are met:
+- Install **Docker** on each operating system.
+- Install **Visual Studio Code (VS Code)**.
+- Install the **Dev Containers** extension in VS Code.
+
+Once these are installed:
+1. **Clone the Repository**: Clone this repository into a working folder on your system.
+2. **Open in Dev Container**: In VS Code, press `Command + Option + P` (on macOS) or `Ctrl + Shift + P` (on Windows/Linux) to open the command palette. Search for `Dev Containers: Open Folder in Container`, then select the folder containing the cloned repository.
+
+Following these steps ensures a consistent development environment across different platforms.
 
 ## Adjusting `.gitignore`
 Ensure you adjust the `.gitignore` file according to your project needs. For example, in this template, the `/data/` folder is excluded from source control by default.
