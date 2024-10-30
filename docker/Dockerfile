@@ -1,18 +1,17 @@
-
 # Use the latest Python image as the base
 FROM python:latest
 
 # Set the working directory in the container
-WORKDIR /app
+WORKDIR /workspace
 
-# Copy the requirements file into the container
-COPY requirements.txt .
+# Copy only the requirements file first (helps with Docker layer caching)
+COPY requirements.txt /workspace/
 
 # Install the dependencies from requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the current directory contents into the container at /app
-COPY . .
+# Copy all contents into the container (for the initial build only)
+COPY . /workspace/
 
-# Set up default command to start an interactive session
-CMD ["python"]
+# Start Jupyter Notebook server by default
+CMD ["jupyter", "notebook", "--ip=0.0.0.0", "--no-browser", "--allow-root"]

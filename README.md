@@ -1,17 +1,18 @@
 # Data Project Template
 
 ## Overview
-This project template is based on a simplified version of the [Cookiecutter Data Science](https://cookiecutter-data-science.drivendata.org) template. It is designed to support AI and data science projects using Docker for a reproducible environment setup.
+This project template is based on a simplified version of the [Cookiecutter Data Science](https://cookiecutter-data-science.drivendata.org) template. It is designed to support AI and data science projects using Docker and Visual Studio Code’s dev container setup for a reproducible environment.
 
 ## Adjusting `.gitignore`
 Ensure you adjust the `.gitignore` file according to your project needs. For example, in this template, the `/data/` folder is excluded from source control by default.
 
 Typically, you want to exclude this folder if it contains either sensitive data that you do not want to add to version control or large files.
 
-## Docker for Environment Setup
-This template uses Docker to create a consistent and isolated environment for your project, avoiding conflicts between local dependencies and ensuring compatibility across different systems.
+## Docker and Devcontainer Setup for Environment Consistency
+This template uses Docker and VS Code’s dev container configuration to create a consistent and isolated environment for your project, avoiding conflicts between local dependencies and ensuring compatibility across different systems.
 
-### Docker Setup
+### Setup Instructions
+
 1. **Build the Docker Image**  
    Run the following command to build the Docker image from the Dockerfile in the `docker` folder:
    ```bash
@@ -21,21 +22,25 @@ This template uses Docker to create a consistent and isolated environment for yo
 2. **Run the Docker Container**  
    After building the image, start a container using:
    ```bash
-   docker run --rm -it --env-file docker/.env -v $(pwd):/app your_project_name
+   docker run --rm -it --env-file docker/.env -v $(pwd):/workspace your_project_name
    ```
    - The `--env-file` option loads environment variables from the `.env` file located in the `docker` folder.
-   - The `-v $(pwd):/app` option mounts your project directory to `/app` in the container, allowing changes in your local directory to reflect inside the Docker container.
+   - The `-v $(pwd):/workspace` option mounts your project directory to `/workspace` in the container, allowing changes in your local directory to reflect inside the Docker container.
 
-3. **Environment Variables**
+3. **Using VS Code Dev Container**
+   - Ensure you have the `.devcontainer` folder at the root of your project with a `devcontainer.json` file to support VS Code’s container setup.
+   - The configuration will allow you to work seamlessly across platforms using a consistent Docker environment.
+
+4. **Environment Variables**
    If you don’t want to use the `.env.example` file, you can skip the `.env` setup entirely for Docker. In this case, environment variables can be defined directly in the `docker run` command, like this:
    ```bash
-   docker run --rm -it -e VARIABLE_NAME=value -v $(pwd):/app your_project_name
+   docker run --rm -it -e VARIABLE_NAME=value -v $(pwd):/workspace your_project_name
    ```
    - Replace `VARIABLE_NAME` and `value` with each environment variable and its value.
    - This method is helpful for quickly setting variables without needing a separate `.env` file but may not be ideal for more complex configurations.
    - If you don’t need certain variables, you can omit `-e VARIABLE_NAME=value` entirely from the command.
 
-4. **Copying `.env.example` for Projects Using .env**  
+5. **Copying `.env.example` for Projects Using .env**  
    If you prefer to use a `.env` file, copy the `.env.example` file in the `docker` folder to `.env`, then edit it with your project-specific environment variables. To copy the file:
    ```bash
    cp docker/.env.example docker/.env # Linux, macOS, Git Bash, WSL
@@ -48,54 +53,55 @@ The dependencies are managed through a `requirements.txt` file located in the `d
 - **Adding Dependencies**: Add any additional dependencies directly to `docker/requirements.txt`.
 - **Installing Dependencies in Docker**: When building the Docker image, all dependencies from `requirements.txt` are automatically installed in the container.
 
-
 ## Project Organization
 
 ```
-├── docker                   <- Docker-specific files, including Dockerfile and environment files.
-│   ├── Dockerfile           <- Dockerfile defining the project environment.
-│   ├── .env.example         <- Template for environment variables, to be copied to `.env`.
-│   └── requirements.txt     <- List of dependencies for the Docker environment.
+├── .devcontainer               <- Devcontainer files for VS Code Docker setup.
+│   └── devcontainer.json       <- VS Code configuration for dev container support.
 │
-├── README.md                <- The top-level README for developers using this project
+├── docker                      <- Docker-specific files, including Dockerfile and environment files.
+│   ├── Dockerfile              <- Dockerfile defining the project environment.
+│   ├── .env.example            <- Template for environment variables, to be copied to `.env`.
+│   └── requirements.txt        <- List of dependencies for the Docker environment.
+│
+├── README.md                   <- The top-level README for developers using this project
 │
 ├── data
-│   ├── external             <- Data from third party sources
-│   ├── interim              <- Intermediate data that has been transformed
-│   ├── processed            <- The final, canonical data sets for modeling
-│   └── raw                  <- The original, immutable data dump
+│   ├── external                <- Data from third party sources
+│   ├── interim                 <- Intermediate data that has been transformed
+│   ├── processed               <- The final, canonical data sets for modeling
+│   └── raw                     <- The original, immutable data dump
 │
-├── models                   <- Trained and serialized models, model predictions, or model summaries
+├── models                      <- Trained and serialized models, model predictions, or model summaries
 │
-├── notebooks                <- Jupyter notebooks. Naming convention is a number (for ordering),
-│                               the creator's initials, and a short `-` delimited description, e.g.
-│                               `1.0-jqp-initial-data-exploration`
+├── notebooks                   <- Jupyter notebooks. Naming convention is a number (for ordering),
+│                                  the creator's initials, and a short `-` delimited description, e.g.
+│                                  `1.0-jqp-initial-data-exploration`
 │
-├── references               <- Data dictionaries, manuals, and all other explanatory materials
+├── references                  <- Data dictionaries, manuals, and all other explanatory materials
 │
-├── reports                  <- Generated analysis as HTML, PDF, LaTeX, etc.
-│   └── figures              <- Generated graphics and figures to be used in reporting
+├── reports                     <- Generated analysis as HTML, PDF, LaTeX, etc.
+│   └── figures                 <- Generated graphics and figures to be used in reporting
 │
-└── src                      <- Source code for this project
+└── src                         <- Source code for this project
     │
-    ├── __init__.py          <- Makes src a Python module
+    ├── __init__.py             <- Makes src a Python module
     │
-    ├── config.py            <- Store useful variables and configuration
+    ├── config.py               <- Store useful variables and configuration
     │
-    ├── dataset.py           <- Scripts to download or generate data
+    ├── dataset.py              <- Scripts to download or generate data
     │
-    ├── features.py          <- Code to create features for modeling
+    ├── features.py             <- Code to create features for modeling
     │
-    ├── modeling             <- Code for training and inference
+    ├── modeling                <- Code for training and inference
     │   ├── __init__.py 
-    │   ├── predict.py       <- Code to run model inference with trained models          
-    │   └── train.py         <- Code to train models
+    │   ├── predict.py          <- Code to run model inference with trained models          
+    │   └── train.py            <- Code to train models
     │
-    ├── plots.py             <- Code to create visualizations 
+    ├── plots.py                <- Code to create visualizations 
     │
-    └── services             <- Service classes to connect with external platforms, tools, or APIs
+    └── services                <- Service classes to connect with external platforms, tools, or APIs
         └── __init__.py 
-
 ```
 
---------
+---
